@@ -19,14 +19,14 @@ class ShopPage extends React.Component {
   };
 
   // snapshot is snapshot representation of collections array from firestore
-  unsubscribeFromSnapshot = null;
+  // unsubscribeFromSnapshot = null;
 
   componentDidMount() {
     const { updateCollections } = this.props;
     const collectionRef = firestore.collection("collections");
 
-    // onSnapshot() subscribes to collectionRef and listens for changes. Will return snapshot representing collections object at the time when this code renders
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+    // .get() makes api call to fetch the data associated with collectionRef (snapshot obj from back end)
+    collectionRef.get().then(snapshot => {
       // convert snapshot's docs property (array) into new object and only include properties needed for front end
       const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
       // Update reducer with collectionsMap
